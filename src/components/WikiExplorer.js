@@ -1,22 +1,7 @@
 import React, { Component } from 'react';
-import { Box, Button, Heading, Grommet, ResponsiveContext } from 'grommet';
-import { Notification, FormRefresh } from 'grommet-icons';
+import { Box, Anchor, Heading, Grommet, ResponsiveContext } from 'grommet';
 import WikiApi from '../util/WikiApi';
 import WikiRoom from './WikiRoom';
-
-// const AppBar = (props) => (
-//       <Box
-//         tag='header'
-//         direction='row'
-//         align='center'
-//         justify='between'
-//         background='brand'
-//         pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-//         elevation='large'
-//         style={{ zIndex: '1' }}
-//         {...props}
-//       />
-//     );  
 
 class WikiExplorer extends Component {
     constructor(props){
@@ -55,6 +40,17 @@ class WikiExplorer extends Component {
             '3-door': {value : 980},
             '4-door': {value : 1280},
             '5-door': {value : 1690},
+            '5-door': {value: 4000}
+          },
+          focus: {
+            outline : {
+              color: '#00FFFF00'
+            }
+          }
+        },
+        anchor: {
+          hover: {
+            textDecoration: 'none'
           },
         }
     };
@@ -62,11 +58,11 @@ class WikiExplorer extends Component {
 
     render = () => {
         return(
-            <Grommet theme={this.theme}>
+            <Grommet theme={this.theme} >
             <ResponsiveContext.Consumer>
                 {size => (
                     <Box fill background={{'color': 'back'}}>
-                    <Heading  margin='auto' textAlign='center'>{this.state.title}</Heading>
+                    <Heading  margin='auto' textAlign='center'><Anchor href={'https://en.wikipedia.org/wiki/' + this.state.title} label={this.state.title} /></Heading>
                     <WikiRoom 
                         pageSize={size}
                         links={this.state.links} 

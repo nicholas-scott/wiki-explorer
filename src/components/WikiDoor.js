@@ -1,28 +1,18 @@
 import React, { Component } from 'react';
-import { Box, Text } from 'grommet';
+import { Box, Anchor, Text } from 'grommet';
 import Styled from 'styled-components';
-import ComponentStyles from './ComponentStyles.module.css';
 
 let Title = (props) => {
   return (
     <Box 
       margin='auto'
-      height='15%'
+      height='18%'
       width='100%'
       >
-      <Text textAlign='center' margin='auto'>{props.title}</Text>
+      <Text textAlign='center' margin='auto'><Anchor href={'https://en.wikipedia.org/wiki/' + props.title} label={props.title} /></Text>
     </Box>
   )
 }
-
-// let Door = (props) => {
-//   return(
-//     <Box>
-      
-//     </Box>
-//   )
-// }
-
 
 class WikiDoor extends Component {
   state = generateColor();
@@ -45,9 +35,7 @@ class WikiDoor extends Component {
 }
 
 class DoorDoor extends Component {
-  
   state = {className:  `door${Math.floor(Math.random() * 8) + 1}`}
-
   render(){
     console.log(this.state.className);
     return(
@@ -85,7 +73,7 @@ let DoorLight = Styled.div`
 `
 
 let DoorFrame = Styled.div`
-  height: 85%;
+  height: 82%;
   margin: 0 auto;
   width: 100%;
   border-color: #636363;
