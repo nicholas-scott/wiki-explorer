@@ -1,12 +1,11 @@
 import React from "react"
+import { WikiLink } from "../types"
 
 interface WikiDoorProps {
-	door: {
-		title: string
-		url: string
-	}
+	door: WikiLink
 }
-export function WikiDoor({ door }: WikiDoorProps) {
+
+export const WikiDoor = ({ door }: WikiDoorProps) => {
 	const { title, url } = door
 	return (
 		<div>

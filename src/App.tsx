@@ -1,14 +1,22 @@
-import { useState } from "react"
-import reactLogo from "./assets/react.svg"
 import { WikiGrid } from "./components/WikiGrid"
+import { useContext } from "react"
+import { WikiExplorerContext } from "./store/wikiExpContextProvider"
+import { Menu } from "./components/Menu"
+// Game state
+// 1. mainmenu/playing/finished
+// 2. goal page
+// 3. current page
+// 4. pages visited
+// 5. wikilinks from current page
 
 function App() {
-	const [count, setCount] = useState(0)
+	const wikiExpState = useContext(WikiExplorerContext)
 
 	return (
 		<div className="App">
-			<h1>hello world</h1>
-			<WikiGrid />
+			<h1>Wiki-explorer</h1>
+			{wikiExpState && wikiExpState.mode === "MENU" && <Menu />}
+			{wikiExpState && wikiExpState.mode === "EXPLORE" && <WikiGrid />}
 		</div>
 	)
 }

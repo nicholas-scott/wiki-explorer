@@ -1,3 +1,5 @@
+import { useContext } from "react"
+import { WikiExplorerReducerContext } from "../store/wikiExpContextProvider"
 import { WikiDoor } from "./WikiDoor"
 
 const wikiLinks = [
@@ -17,13 +19,26 @@ const wikiLinks = [
 	},
 ]
 
-export function WikiGrid() {
+export const WikiGrid = ({}) => {
+	const dispatchWikiExpState = useContext(WikiExplorerReducerContext)
 	//render all links as list in div with h1 for title, p for url
 	return (
 		<div>
+			<button
+				onClick={() => {
+					dispatchWikiExpState({ type: "STOP" })
+				}}
+			>
+				stop game
+			</button>
 			{wikiLinks &&
-				wikiLinks.map((wikiLink) => {
-					return <WikiDoor door={wikiLink}></WikiDoor>
+				wikiLinks.map((wikiLink, ind) => {
+					return (
+						<WikiDoor
+							key={`door-${ind}`}
+							door={wikiLink}
+						></WikiDoor>
+					)
 				})}
 		</div>
 	)
