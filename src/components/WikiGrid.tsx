@@ -24,12 +24,13 @@ export const WikiGrid = ({}) => {
 	//render all links as list in div with h1 for title, p for url
 	return (
 		<div>
+			<h2>Explore</h2>
 			<button
 				onClick={() => {
 					dispatchWikiExpState({ type: "STOP" })
 				}}
 			>
-				stop game
+				Stop Game
 			</button>
 			{wikiLinks &&
 				wikiLinks.map((wikiLink, ind) => {

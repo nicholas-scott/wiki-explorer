@@ -15,8 +15,8 @@ function App() {
 	return (
 		<div className="App">
 			<h1>Wiki-explorer</h1>
-			{wikiExpState && wikiExpState.mode === "MENU" && <Menu />}
-			{wikiExpState && wikiExpState.mode === "EXPLORE" && <WikiGrid />}
+			{wikiExpState.mode === "MENU" && <Menu />}
+			{wikiExpState.mode === "EXPLORE" && <WikiGrid />}
 		</div>
 	)
 }

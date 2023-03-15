@@ -5,13 +5,13 @@ export const Menu = () => {
 	const dispatchWikiExpState = useContext(WikiExplorerReducerContext)
 	return (
 		<div>
-			<h2>menu</h2>
+			<h2>Menu</h2>
 			<button
 				onClick={() => {
 					dispatchWikiExpState({ type: "START" })
 				}}
 			>
-				start game
+				Start game
 			</button>
 		</div>
 	)
