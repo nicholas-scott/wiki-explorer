@@ -4,7 +4,12 @@ export interface WikiLink {
 	url: string
 }
 
-export type ActionType = "START" | "STOP"
+export type ActionType =
+	| "START"
+	| "STOP"
+	| "FETCHING_LINKS"
+	| "FETCH_SUCCESS"
+	| "FETCH_ERROR"
 export type ModeType = "MENU" | "EXPLORE"
 
 export interface WikiExpState {
