@@ -1,27 +1,5 @@
-import { useContext, useEffect } from "react"
-import axios from "axios"
-
 import { WikiDoor } from "./WikiDoor"
 import { useWikiApi } from "../hooks/useWikiApi"
-
-const wikiLinks: any[] = [
-	// {
-	// 	title: "Matthew Quay",
-	// 	url: "https://en.wikipedia.org/wiki/Matthew_Quay",
-	// },
-	// {
-	// 	title: "NASA",
-	// 	url: "https://en.wikipedia.org/wiki/NASA",
-	// },
-	// {
-	// 	title: "Space Shuttle",
-	// 	url: "https://en.wikipedia.org/wiki/Space_Shuttle",
-	// },
-	// {
-	// 	title: "International Space Station",
-	// 	url: "https://en.wikipedia.org/wiki/International_Space_Station",
-	// },
-]
 
 export const WikiGrid = () => {
 	const { getWikiLinks, currentPage, goalPage } = useWikiApi()
@@ -29,9 +7,7 @@ export const WikiGrid = () => {
 	return (
 		<div>
 			<h2>Explore</h2>
-
-			{currentPage &&
-				currentPage.links &&
+			{currentPage?.links &&
 				currentPage.links.map((wikiLink, ind) => {
 					return (
 						<WikiDoor

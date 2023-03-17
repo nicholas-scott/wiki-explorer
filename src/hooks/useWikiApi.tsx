@@ -1,6 +1,6 @@
 import axios from "axios"
-import { useState, useReducer, useEffect } from "react"
-import { WikiLink, WikiPage } from "../types"
+import { useState, useEffect } from "react"
+import { WikiPage } from "../types"
 
 export function useWikiApi() {
 	const [currentPage, setCurrentPage] = useState<WikiPage | null>(null)
@@ -35,6 +35,7 @@ export function useWikiApi() {
 	useEffect(() => {
 		const controller = new AbortController()
 		let url = ""
+		// If linkToGet is empty, we're starting a new exploration with random pages
 		if (linkToGet === "") {
 			url = `https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&formatversion=2&rnnamespace=0&rnlimit=2&origin=*`
 		} else {
@@ -65,5 +66,5 @@ export function useWikiApi() {
 		}
 	}, [linkToGet])
 
-	return { getWikiLinks, currentPage, goalPage }
+	return { getWikiLinks, currentPage, goalPage, isLoading }
 }

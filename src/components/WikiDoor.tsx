@@ -6,7 +6,7 @@ interface WikiDoorProps {
 }
 
 export const WikiDoor = ({ door, onOpen }: WikiDoorProps) => {
-	const { title, ns, exists } = door
+	const { title } = door
 	return (
 		<div
 			onClick={() => {

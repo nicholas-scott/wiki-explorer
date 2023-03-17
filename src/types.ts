@@ -10,26 +10,3 @@ export interface WikiPage {
 	pageid: number
 	links?: WikiLink[]
 }
-
-export type ActionType =
-	| "START"
-	| "STOP"
-	| "FETCHING_LINKS"
-	| "FETCH_SUCCESS"
-	| "FETCH_ERROR"
-export type ModeType = "MENU" | "EXPLORE"
-
-export interface WikiExpState {
-	mode: ModeType
-	isLoading: boolean
-}
-
-export interface Action {
-	type: ActionType
-	payload?: any
-}
-
-export type WikiExpReducerType = (
-	state: WikiExpState,
-	action: Action
-) => WikiExpState
