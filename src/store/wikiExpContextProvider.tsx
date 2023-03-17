@@ -4,6 +4,7 @@ import { wikiExpReducer } from "./wikiExplorerReducer"
 
 const initialState: WikiExpState = {
 	mode: "MENU",
+	isLoading: false,
 }
 export const WikiExplorerContext = createContext<WikiExpState>(initialState)
 export const WikiExplorerReducerContext = createContext<React.Dispatch<Action>>(

@@ -1,7 +1,14 @@
 // Store globally used types here.
 export interface WikiLink {
 	title: string
-	url: string
+	exists: boolean
+	ns: number
+}
+
+export interface WikiPage {
+	title: string
+	pageid: number
+	links?: WikiLink[]
 }
 
 export type ActionType =
@@ -14,6 +21,7 @@ export type ModeType = "MENU" | "EXPLORE"
 
 export interface WikiExpState {
 	mode: ModeType
+	isLoading: boolean
 }
 
 export interface Action {

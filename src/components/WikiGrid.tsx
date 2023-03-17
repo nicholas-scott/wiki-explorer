@@ -1,31 +1,55 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import axios from "axios"
-import { WikiExplorerReducerContext } from "../store/wikiExpContextProvider"
-import { WikiDoor } from "./WikiDoor"
 
-const wikiLinks = [
-	{
-		title: "Matthew Quay",
-		url: "https://en.wikipedia.org/wiki/Matthew_Quay",
-	},
-	{
-		title: "NASA",
-		url: "https://en.wikipedia.org/wiki/NASA",
-	},
-	{
-		title: "Space Shuttle",
-		url: "https://en.wikipedia.org/wiki/Space_Shuttle",
-	},
-	{
-		title: "International Space Station",
-		url: "https://en.wikipedia.org/wiki/International_Space_Station",
-	},
+import { WikiDoor } from "./WikiDoor"
+import { useWikiApi } from "../hooks/useWikiApi"
+
+const wikiLinks: any[] = [
+	// {
+	// 	title: "Matthew Quay",
+	// 	url: "https://en.wikipedia.org/wiki/Matthew_Quay",
+	// },
+	// {
+	// 	title: "NASA",
+	// 	url: "https://en.wikipedia.org/wiki/NASA",
+	// },
+	// {
+	// 	title: "Space Shuttle",
+	// 	url: "https://en.wikipedia.org/wiki/Space_Shuttle",
+	// },
+	// {
+	// 	title: "International Space Station",
+	// 	url: "https://en.wikipedia.org/wiki/International_Space_Station",
+	// },
 ]
 
 export const WikiGrid = () => {
-	const dispatchWikiExpState = useContext(WikiExplorerReducerContext)
+	const { getWikiLinks, currentPage, goalPage } = useWikiApi()
 
-	const fetchData = async (title: string) => {
+	return (
+		<div>
+			<h2>Explore</h2>
+
+			{currentPage &&
+				currentPage.links &&
+				currentPage.links.map((wikiLink, ind) => {
+					return (
+						<WikiDoor
+							key={`door-${ind}`}
+							door={wikiLink}
+							onOpen={getWikiLinks}
+						></WikiDoor>
+					)
+				})}
+		</div>
+	)
+}
+
+/*
+const dispatchWikiExpState = useContext(WikiExplorerReducerContext)
+	const wikiExpState = useContext(WikiExplorerContext)
+	
+const fetchData = async (title: string) => {
 		const link = `https://en.wikipedia.org/w/api.php?action=parse&format=json&title=${title}&prop=links&formatversion=2&origin=*`
 		dispatchWikiExpState({ type: "FETCHING_LINKS" })
 		try {
@@ -38,26 +62,10 @@ export const WikiGrid = () => {
 		}
 	}
 
-	return (
-		<div>
-			<h2>Explore</h2>
-			<button
-				onClick={() => {
-					dispatchWikiExpState({ type: "STOP" })
-				}}
-			>
-				Stop Game
-			</button>
-			{wikiLinks &&
-				wikiLinks.map((wikiLink, ind) => {
-					return (
-						<WikiDoor
-							key={`door-${ind}`}
-							door={wikiLink}
-							openDoor={fetchData}
-						></WikiDoor>
-					)
-				})}
-		</div>
-	)
-}
+	useEffect(() => {
+		if (wikiExpState.mode === "EXPLORE" && !wikiExpState.isLoading) {
+			console.log("STARTED EXPLORING")
+			fetchData()
+		}
+	}, [wikiExpState.mode, wikiExpState.isLoading])
+*/

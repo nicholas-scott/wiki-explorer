@@ -2,19 +2,18 @@ import { WikiLink } from "../types"
 
 interface WikiDoorProps {
 	door: WikiLink
-	openDoor: (title: string) => void
+	onOpen: (title: string) => void
 }
 
-export const WikiDoor = ({ door, openDoor }: WikiDoorProps) => {
-	const { title, url } = door
+export const WikiDoor = ({ door, onOpen }: WikiDoorProps) => {
+	const { title, ns, exists } = door
 	return (
 		<div
 			onClick={() => {
-				openDoor(title.replace(" ", "_"))
+				onOpen(title.replace(" ", "_"))
 			}}
 		>
 			<h3>{title}</h3>
-			<p>{url}</p>
 		</div>
 	)
 }
