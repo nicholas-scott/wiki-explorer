@@ -23,7 +23,7 @@ export function useWikiExplorer() {
 						pageid: pages[1].id,
 						title: pages[1].title,
 					})
-					console.log("page to get", pageToGet)
+
 					fetchWikiLinks(pageToGet, signal)
 				})
 				.catch((err) => {
@@ -39,14 +39,11 @@ export function useWikiExplorer() {
 	}, [])
 
 	function fetchWikiLinks(pageTitle: string, signal: AbortSignal) {
-		console.log("Fetching links for", pageTitle)
 		const url = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${pageTitle}&prop=links&formatversion=2&origin=*`
 		axios
 			.get(url, { signal })
 			.then((resp) => {
 				const page = resp.data.parse
-				console.log("Page:")
-				console.log(page)
 				loadPage(page)
 			})
 			.catch((err) => {
