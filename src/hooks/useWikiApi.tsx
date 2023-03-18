@@ -2,27 +2,59 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { WikiPage } from "../types"
 
-export function useWikiApi() {
-	const [currentPage, setCurrentPage] = useState<WikiPage | null>(null)
+export function useWikiExplorer() {
 	const [goalPage, setGoalPage] = useState<WikiPage | null>(null)
-	const [linkToGet, setLinkToGet] = useState("")
-	const [isLoading, setIsLoading] = useState(false)
+	const [currentPage, setCurrentPage] = useState<WikiPage | null>(null)
+	const [pageToGet, setPageToGet] = useState("")
 
-	const getWikiLinks = async (pageTitle: string) => {
-		setLinkToGet(pageTitle)
+	useEffect(() => {
+		const controller = new AbortController()
+		const signal = controller.signal
+		const innitExploration = async () => {
+			const urlRandomPages = `https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&formatversion=2&rnnamespace=0&rnlimit=2&origin=*`
+
+			await axios
+				.get(urlRandomPages, { signal })
+				.then(async (resp) => {
+					const pages = resp.data.query.random
+					const pageToGet = pages[0].title.replaceAll(" ", "_")
+
+					setGoalPage({
+						pageid: pages[1].id,
+						title: pages[1].title,
+					})
+					console.log("page to get", pageToGet)
+					fetchWikiLinks(pageToGet, signal)
+				})
+				.catch((err) => {
+					console.log(err)
+				})
+		}
+
+		innitExploration()
+
+		return () => {
+			controller.abort()
+		}
+	}, [])
+
+	function fetchWikiLinks(pageTitle: string, signal: AbortSignal) {
+		console.log("Fetching links for", pageTitle)
+		const url = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${pageTitle}&prop=links&formatversion=2&origin=*`
+		axios
+			.get(url, { signal })
+			.then((resp) => {
+				const page = resp.data.parse
+				console.log("Page:")
+				console.log(page)
+				loadPage(page)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
 	}
 
-	const innitExploration = (
-		pages: { id: number; ns: number; title: string }[]
-	) => {
-		setLinkToGet(pages[0].title.replace(" ", "_"))
-		setGoalPage({
-			pageid: pages[1].id,
-			title: pages[1].title,
-		})
-	}
-
-	const loadPage = (page: WikiPage) => {
+	function loadPage(page: WikiPage) {
 		if (page.links) {
 			page.links = page.links.filter((link) => {
 				return link.ns === 0 && link.exists
@@ -33,38 +65,18 @@ export function useWikiApi() {
 	}
 
 	useEffect(() => {
-		const controller = new AbortController()
-		let url = ""
-		// If linkToGet is empty, we're starting a new exploration with random pages
-		if (linkToGet === "") {
-			url = `https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&formatversion=2&rnnamespace=0&rnlimit=2&origin=*`
-		} else {
-			url = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${linkToGet}&prop=links&formatversion=2&origin=*`
+		if (pageToGet) {
+			const controller = new AbortController()
+			fetchWikiLinks(pageToGet, controller.signal)
+			return () => {
+				controller.abort()
+			}
 		}
+	}, [pageToGet])
 
-		setIsLoading(true)
+	const openDoor = (title: string) => {
+		setPageToGet(title)
+	}
 
-		axios
-			.get(url, {
-				signal: controller.signal,
-			})
-			.then((resp) => {
-				console.log(resp.data)
-				linkToGet === ""
-					? innitExploration(resp.data.query.random)
-					: loadPage(resp.data.parse)
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-			.finally(() => {
-				setIsLoading(false)
-			})
-		return () => {
-			setIsLoading(false)
-			controller.abort()
-		}
-	}, [linkToGet])
-
-	return { getWikiLinks, currentPage, goalPage, isLoading }
+	return { openDoor, currentPage, goalPage }
 }

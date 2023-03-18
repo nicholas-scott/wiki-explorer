@@ -1,19 +1,21 @@
 import { WikiDoor } from "./WikiDoor"
-import { useWikiApi } from "../hooks/useWikiApi"
+import { useWikiExplorer } from "../hooks/useWikiApi"
 
 export const WikiGrid = () => {
-	const { getWikiLinks, currentPage, goalPage } = useWikiApi()
-
+	const { openDoor, currentPage, goalPage } = useWikiExplorer()
+	console.log(currentPage)
 	return (
 		<div>
-			<h2>Explore</h2>
+			<h1>Explore</h1>
+			{goalPage && <h2>Goal: {goalPage.title}</h2>}
+			{currentPage && <h2>Current: {currentPage.title}</h2>}
 			{currentPage?.links &&
 				currentPage.links.map((wikiLink, ind) => {
 					return (
 						<WikiDoor
 							key={`door-${ind}`}
 							door={wikiLink}
-							onOpen={getWikiLinks}
+							onOpen={openDoor}
 						></WikiDoor>
 					)
 				})}
