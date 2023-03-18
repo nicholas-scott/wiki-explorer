@@ -6,14 +6,15 @@ export function useWikiExplorer() {
 	const [goalPage, setGoalPage] = useState<WikiPage | null>(null)
 	const [currentPage, setCurrentPage] = useState<WikiPage | null>(null)
 	const [pageToGet, setPageToGet] = useState("")
+	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
 		const controller = new AbortController()
 		const signal = controller.signal
 		const innitExploration = async () => {
 			const urlRandomPages = `https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&formatversion=2&rnnamespace=0&rnlimit=2&origin=*`
-
-			await axios
+			setIsLoading(true)
+			axios
 				.get(urlRandomPages, { signal })
 				.then(async (resp) => {
 					const pages = resp.data.query.random
@@ -24,10 +25,13 @@ export function useWikiExplorer() {
 						title: pages[1].title,
 					})
 
-					fetchWikiLinks(pageToGet, signal)
+					await fetchWikiLinks(pageToGet, signal)
 				})
 				.catch((err) => {
 					console.log(err)
+				})
+				.finally(() => {
+					setIsLoading(false)
 				})
 		}
 
@@ -38,8 +42,9 @@ export function useWikiExplorer() {
 		}
 	}, [])
 
-	function fetchWikiLinks(pageTitle: string, signal: AbortSignal) {
+	async function fetchWikiLinks(pageTitle: string, signal: AbortSignal) {
 		const url = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${pageTitle}&prop=links&formatversion=2&origin=*`
+		setIsLoading(true)
 		axios
 			.get(url, { signal })
 			.then((resp) => {
@@ -48,6 +53,9 @@ export function useWikiExplorer() {
 			})
 			.catch((err) => {
 				console.log(err)
+			})
+			.finally(() => {
+				setIsLoading(false)
 			})
 	}
 
@@ -75,5 +83,5 @@ export function useWikiExplorer() {
 		setPageToGet(title)
 	}
 
-	return { openDoor, currentPage, goalPage }
+	return { openDoor, currentPage, goalPage, isLoading }
 }
