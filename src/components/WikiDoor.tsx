@@ -1,4 +1,5 @@
 import { WikiLink } from "../types"
+import { HoverSlidingText } from "./HoverSliding"
 
 interface WikiDoorProps {
 	door: WikiLink
@@ -13,7 +14,7 @@ export const WikiDoor = ({ door, onOpen }: WikiDoorProps) => {
 				onOpen(title.replace(" ", "_"))
 			}}
 		>
-			<h3>{title}</h3>
+			<HoverSlidingText text={title} width={200} />
 		</div>
 	)
 }
