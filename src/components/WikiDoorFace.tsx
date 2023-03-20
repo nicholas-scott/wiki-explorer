@@ -1,5 +1,21 @@
 import { Box } from "@mui/material"
 import { useState } from "react"
+//import the different colors defined by mui
+import { colors } from "@mui/material/"
+
+const getRandomMuiColor = () => {
+	const muiColors = Object.keys(colors)
+	const indexOfCommon = muiColors.indexOf("common")
+	muiColors.splice(indexOfCommon, 1)
+	const randomColor = muiColors[Math.floor(Math.random() * muiColors.length)]
+	//@ts-ignore
+	const randomColorShades = Object.keys(colors[randomColor])
+	const randomShade =
+		randomColorShades[Math.floor(Math.random() * randomColorShades.length)]
+	//@ts-ignore
+	const randomColorValue = colors[randomColor][randomShade]
+	return randomColorValue
+}
 interface WikiDoorFaceProps {
 	onClick?: () => void
 }
@@ -10,11 +26,14 @@ export const WikiDoorFace = ({ onClick }: WikiDoorFaceProps) => {
 	const [imageId, setImageId] = useState(
 		Math.floor(Math.random() * imageCount) + 1
 	)
+	const [color, setColor] = useState(getRandomMuiColor())
+
 	return (
-		<Box bgcolor="red" border={4}>
+		<Box bgcolor="grey" border={4}>
 			{imageId && (
 				<Box
-					bgcolor="green"
+					bgcolor={color}
+					color="white"
 					display="block"
 					onClick={onClick}
 					component="img"
@@ -22,7 +41,7 @@ export const WikiDoorFace = ({ onClick }: WikiDoorFaceProps) => {
 					height="100%"
 					src={`/door_${imageId}.png`}
 					sx={{
-						transition: "all 0.5s ease-in-out",
+						transition: "all 0.2s ease-in-out",
 						transformOrigin: "left",
 						"&:hover": {
 							transform: "perspective(1200px)  rotateY(-25deg);",
