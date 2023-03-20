@@ -1,5 +1,6 @@
 import { Box } from "@mui/material"
 import { WikiLink } from "../types"
+import { WikiDoorFace } from "./WikiDoorFace"
 import { HoverSlidingText } from "./HoverSliding"
 
 interface WikiDoorProps {
@@ -10,16 +11,13 @@ interface WikiDoorProps {
 export const WikiDoor = ({ door, onOpen }: WikiDoorProps) => {
 	const { title } = door
 	return (
-		<Box
-			onClick={() => {
-				onOpen(title.replace(" ", "_"))
-			}}
-			bgcolor="primary.main"
-		>
+		<Box bgcolor="primary.main" width="175px">
 			<HoverSlidingText text={title} width={175} padding={10} />
-			<Box width="100%" height="200px" bgcolor="secondary.main">
-				text
-			</Box>
+			<WikiDoorFace
+				onClick={() => {
+					onOpen(title.replace(" ", "_"))
+				}}
+			/>
 		</Box>
 	)
 }
