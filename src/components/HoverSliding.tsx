@@ -45,6 +45,7 @@ export const HoverSlidingText = ({
 				display: textWidth < width - padding * 2 ? "flex" : "block",
 				justifyContent: textWidth < width ? "center" : "",
 				padding: `${padding}px`,
+				overflow: "hidden",
 			}}
 		>
 			<div

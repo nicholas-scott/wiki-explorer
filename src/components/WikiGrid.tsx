@@ -46,7 +46,6 @@ export const WikiGrid = () => {
 									item
 									gridColumn="span 1"
 									rowGap={2}
-									overflow="hidden"
 									sx={animationsx}
 								>
 									<WikiDoor
