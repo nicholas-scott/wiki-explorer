@@ -12,7 +12,7 @@ export const WikiDoor = ({ door, onOpen }: WikiDoorProps) => {
 	const { title } = door
 	return (
 		<Box bgcolor="primary.main" width="175px">
-			<HoverSlidingText text={title} width={175} padding={10} />
+			<HoverSlidingText text={title} width={175} padding={5} />
 			<WikiDoorFace
 				onClick={() => {
 					onOpen(title.replace(" ", "_"))

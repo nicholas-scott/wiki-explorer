@@ -29,7 +29,12 @@ export const WikiDoorFace = ({ onClick }: WikiDoorFaceProps) => {
 	const [color, setColor] = useState(getRandomMuiColor())
 
 	return (
-		<Box bgcolor="grey" border={4}>
+		<Box
+			bgcolor="#333333"
+			border={4}
+			borderColor="#636363
+		"
+		>
 			{imageId && (
 				<Box
 					bgcolor={color}

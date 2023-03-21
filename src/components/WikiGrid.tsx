@@ -1,8 +1,6 @@
 import { WikiDoor } from "./WikiDoor"
-import { useWikiExplorer } from "../hooks/useWikiApi"
 import { Grid, Box } from "@mui/material"
-import css from "@emotion/css"
-import { keyframes } from "@emotion/react"
+import { WikiPage } from "../types"
 
 const animationsx = {
 	transition: "all 0.5s ease-in-out",
@@ -17,15 +15,15 @@ const animationsx = {
 	animation: "appear 0.5s ease-in-out",
 }
 
+interface WikiGridProps {
+	page: WikiPage | null
+	isLoading: boolean
+	loadPage: (title: string) => void
+}
 //On every Grid item, apply the animation with deylay of
-export const WikiGrid = () => {
-	const { openDoor, currentPage, goalPage, isLoading } = useWikiExplorer()
-
+export const WikiGrid = ({ page, isLoading, loadPage }: WikiGridProps) => {
 	return (
 		<Box display="flex" flexDirection="column" alignItems="center">
-			{goalPage && <h2>Goal: {goalPage.title}</h2>}
-			{currentPage && <h2>Current: {currentPage.title}</h2>}
-			{/* {isLoading && <h2>Loading...</h2>} */}
 			{!isLoading && (
 				<Grid
 					display="grid"
@@ -33,13 +31,14 @@ export const WikiGrid = () => {
 						"repeat(2, 1fr)",
 						"repeat(3, 1fr)",
 						"repeat(5, 1fr)",
+						"repeat(5, 1fr)",
 						"repeat(5 1fr)",
 					]}
 					justifyContent="space-between"
 					gap={2}
 				>
-					{currentPage?.links &&
-						currentPage.links.map((wikiLink, ind) => {
+					{page?.links &&
+						page.links.map((wikiLink, ind) => {
 							return (
 								<Grid
 									key={`door-${ind}`}
@@ -50,7 +49,7 @@ export const WikiGrid = () => {
 								>
 									<WikiDoor
 										door={wikiLink}
-										onOpen={openDoor}
+										onOpen={loadPage}
 									></WikiDoor>
 								</Grid>
 							)

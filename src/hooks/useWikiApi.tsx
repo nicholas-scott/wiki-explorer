@@ -49,7 +49,7 @@ export function useWikiExplorer() {
 			.get(url, { signal })
 			.then((resp) => {
 				const page = resp.data.parse
-				loadPage(page)
+				parsePageInfo(page)
 			})
 			.catch((err) => {
 				console.log(err)
@@ -59,7 +59,7 @@ export function useWikiExplorer() {
 			})
 	}
 
-	function loadPage(page: WikiPage) {
+	function parsePageInfo(page: WikiPage) {
 		if (page.links) {
 			page.links = page.links.filter((link) => {
 				return link.ns === 0 && link.exists
@@ -79,9 +79,9 @@ export function useWikiExplorer() {
 		}
 	}, [pageToGet])
 
-	const openDoor = (title: string) => {
+	const loadPage = (title: string) => {
 		setPageToGet(title)
 	}
 
-	return { openDoor, currentPage, goalPage, isLoading }
+	return { loadPage, currentPage, goalPage, isLoading }
 }
