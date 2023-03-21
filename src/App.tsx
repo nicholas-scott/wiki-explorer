@@ -1,3 +1,4 @@
+import { WikiDoor } from "./components/WikiDoor"
 import { WikiGrid } from "./components/WikiGrid"
 import { useWikiExplorer } from "./hooks/useWikiApi"
 
