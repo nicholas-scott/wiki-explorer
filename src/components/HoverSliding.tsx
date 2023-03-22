@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface HoverSlidingTextProps {
 	text: string
@@ -46,6 +46,7 @@ export const HoverSlidingText = ({
 				justifyContent: textWidth < width ? "center" : "",
 				padding: `${padding}px`,
 				overflow: "hidden",
+				fontWeight: "bold",
 			}}
 		>
 			<div

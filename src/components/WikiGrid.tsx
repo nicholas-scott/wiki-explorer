@@ -7,7 +7,7 @@ interface WikiGridProps {
 	isLoading: boolean
 	loadPage: (title: string) => void
 }
-//On every Grid item, apply the animation with deylay of
+
 export const WikiGrid = ({ page, isLoading, loadPage }: WikiGridProps) => {
 	return (
 		<Box
