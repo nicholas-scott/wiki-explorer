@@ -10,5 +10,6 @@ This is a node project. Simply have node installed, install the dependencies for
 
 ## Usage
 
-Try it out here: https://wiki-explorer.onrender.com/
 The title of the current page is displayed at the top. The titles of links on the current page appear above their corresponding doors. If the title is longer then the given space, you can hover over it to reveal more the title.
+
+Try it out here: https://wiki-explorer.onrender.com/
