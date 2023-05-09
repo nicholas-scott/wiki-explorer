@@ -41,7 +41,7 @@ export const HoverSlidingText = ({
 			style={{
 				width: `${width}px`,
 				clipPath: inset,
-				backgroundColor: "green",
+				backgroundColor: "",
 				display: textWidth < width - padding * 2 ? "flex" : "block",
 				justifyContent: textWidth < width ? "center" : "",
 				padding: `${padding}px`,

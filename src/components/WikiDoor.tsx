@@ -23,7 +23,7 @@ const animationsx = {
 export const WikiDoor = ({ door, onOpen }: WikiDoorProps) => {
 	const { title } = door
 	return (
-		<Box bgcolor="primary.main" width="175px" sx={animationsx}>
+		<Box width="175px" sx={animationsx}>
 			<HoverSlidingText text={title} width={175} padding={5} />
 			<WikiDoorFace
 				onClick={() => {
