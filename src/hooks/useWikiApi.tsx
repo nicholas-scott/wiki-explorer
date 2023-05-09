@@ -4,7 +4,7 @@ import { WikiPage } from "../types"
 
 export function useWikiExplorer() {
 	const [goalPage, setGoalPage] = useState<WikiPage | null>(null)
-	const [currentPage, setCurrentPage] = useState<WikiPage | null>(null)
+	const [visitedPages, setVisitedPages] = useState<WikiPage[]>([])
 	const [pageToGet, setPageToGet] = useState("")
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -60,13 +60,14 @@ export function useWikiExplorer() {
 	}
 
 	function parsePageInfo(page: WikiPage) {
+		// links.ns == 0 means it's a link to an article and not another wiki page
 		if (page.links) {
 			page.links = page.links.filter((link) => {
 				return link.ns === 0 && link.exists
 			})
 			page.links.sort((a, b) => (a.title > b.title ? 1 : -1))
 		}
-		setCurrentPage(page)
+		setVisitedPages((prev) => [...prev, page])
 	}
 
 	useEffect(() => {
@@ -83,5 +84,5 @@ export function useWikiExplorer() {
 		setPageToGet(title)
 	}
 
-	return { loadPage, currentPage, goalPage, isLoading }
+	return { loadPage, visitedPages, goalPage, isLoading }
 }
